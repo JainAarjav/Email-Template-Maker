@@ -69,7 +69,7 @@ const EditorPanel: React.FC<EditorPanelProps> = ({
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:3000/uploadImage", {
+      const res = await fetch("https://email-template-maker-backend.onrender.com/uploadImage", {
         method: "POST",
         body: formData,
       });
