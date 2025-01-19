@@ -6,15 +6,16 @@ const multer = require("multer");
 const handlebars = require("handlebars");
 
 const app = express();
-const PORT = process.env.PORT||3000;
+const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Multer for file uploads
+// Multer for file uploads (saving to /uploads)
 const upload = multer({ dest: "uploads/" });
 
-// Read layout.hbs and compile
+// Read layout.hbs and compile it once
 const layoutPath = path.join(__dirname, "../templates/layout.hbs");
 const layoutSource = fs.readFileSync(layoutPath, "utf8");
 const template = handlebars.compile(layoutSource);
@@ -31,8 +32,16 @@ app.get("/getEmailLayout", (req, res) => {
 
 // 2. Handle image uploads
 app.post("/uploadImage", upload.single("image"), (req, res) => {
-  if (!req.file) return res.status(400).send("No file uploaded");
-  const fileUrl = `https://email-template-maker-frontend.onrender.com/uploads/${req.file.filename}`;
+  if (!req.file) {
+    return res.status(400).send("No file uploaded");
+  }
+
+
+  const protocol = req.protocol;           // e.g. "http" or "https"
+  const host = req.get("host");           // e.g. "your-app.onrender.com"
+  const fileUrl = `${protocol}://${host}/uploads/${req.file.filename}`;
+
+  // Respond with the URL for the uploaded file
   res.json({ imageUrl: fileUrl });
 });
 
@@ -55,9 +64,10 @@ app.post("/renderAndDownloadTemplate", (req, res) => {
   }
 });
 
-// Serve uploaded images
+// Serve uploaded images from /uploads
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Backend listening on https://email-template-maker-frontend.onrender.com/`);
+  console.log(`Backend listening on port ${PORT}`);
 });
