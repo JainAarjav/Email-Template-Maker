@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .email-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: {{bgColor}};
+        color: {{textColor}};
+        font-family: sans-serif;
+      }
+      header {
+        padding: 1rem;
+        background: #f5f5f5;
+        text-align: center;
+      }
+      main {
+        padding: 1rem;
+      }
+      img {
+        max-width: 100%;
+      }
+      .cta-button {
+        display: inline-block;
+        padding: 0.75rem 1.25rem;
+        background: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+      footer {
+        background: #eee;
+        text-align: center;
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body style="margin:0; padding:0;">
+    <div class="email-container">
+      <header>
+        <h1>{{title}}</h1>
+      </header>
+      <main>
+        {{#each sections}}
+          {{#ifEq type "text"}}
+            <div style="margin-bottom: 1rem;">
+              {{{content}}} 
+            </div>
+          {{/ifEq}}
+
+          {{#ifEq type "image"}}
+            <div style="margin-bottom: 1rem;">
+              <img src="{{url}}" alt="Section Image" />
+            </div>
+          {{/ifEq}}
+
+          {{#ifEq type "cta"}}
+            <div style="text-align: center; margin-bottom: 1rem;">
+              <a href="{{url}}" class="cta-button">{{content}}</a>
+            </div>
+          {{/ifEq}}
+        {{/each}}
+      </main>
+      <footer>
+        <p>{{footer}}</p>
+      </footer>
+    </div>
+  </body>
+</html>
