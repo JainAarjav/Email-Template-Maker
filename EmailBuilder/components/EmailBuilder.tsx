@@ -35,7 +35,7 @@ const EmailBuilder: React.FC = () => {
 
   // Fetch the raw layout for client-side preview
   useEffect(() => {
-    fetch("http://localhost:3000/getEmailLayout")
+    fetch("https://email-template-maker-backend.onrender.com/getEmailLayout")
       .then((res) => res.json())
       .then((data) => setLayoutHtml(data.layout))
       .catch((err) => console.error("Error fetching layout:", err));
@@ -54,7 +54,7 @@ const EmailBuilder: React.FC = () => {
   // Save config (logs on server)
   const handleSaveConfig = async () => {
     try {
-      const res = await fetch("http://localhost:3000/uploadEmailConfig", {
+      const res = await fetch("https://email-template-maker-backend.onrender.com/uploadEmailConfig", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(emailConfig),
@@ -69,7 +69,7 @@ const EmailBuilder: React.FC = () => {
   // Download final
   const handleDownload = async () => {
     try {
-      const res = await fetch("http://localhost:3000/renderAndDownloadTemplate", {
+      const res = await fetch("https://email-template-maker-backend.onrender.com/renderAndDownloadTemplate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(emailConfig),
