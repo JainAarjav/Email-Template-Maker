@@ -32,7 +32,7 @@ app.get("/getEmailLayout", (req, res) => {
 // 2. Handle image uploads
 app.post("/uploadImage", upload.single("image"), (req, res) => {
   if (!req.file) return res.status(400).send("No file uploaded");
-  const fileUrl = `http://localhost:${PORT}/uploads/${req.file.filename}`;
+  const fileUrl = `https://email-template-maker-frontend.onrender.com/uploads/${req.file.filename}`;
   res.json({ imageUrl: fileUrl });
 });
 
@@ -59,5 +59,5 @@ app.post("/renderAndDownloadTemplate", (req, res) => {
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.listen(PORT, () => {
-  console.log(`Backend listening on http://localhost:${PORT}`);
+  console.log(`Backend listening on https://email-template-maker-frontend.onrender.com/`);
 });
